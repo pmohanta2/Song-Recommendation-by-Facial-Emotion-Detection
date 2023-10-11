@@ -4,6 +4,7 @@
 - [Introduction](#introduction)
 - [Demo](#Demo)
 - [Features](#Features)
+- [Dependencies](#Dependencies)
 - [Project Description](#project-description)
 - [Files in the Repository](#files-in-the-repository)
 - [Data Collection](#data-collection)
@@ -11,8 +12,7 @@
 - [Model](#model)
 - [Training](#training)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+- [Acknowledgments](#Acknowledgments)
 
 ## Introduction
 
@@ -189,6 +189,20 @@ You can use this model for your song recommendation system based on facial emoti
   ```bash
   streamlit run app.py
   ```
+
+## Acknowledgments
+
+I would like to acknowledge and express my gratitude to the following individuals and resources that contributed to the success of this project:
+
+- **Fer 2013 Dataset**: Our work relies on the Fer 2013 dataset for training and testing the emotion recognition model. You can find the dataset [here](https://www.kaggle.com/datasets/ashishpatel26/facial-expression-recognitionferchallenge).
+
+- **Open Source Community**: A big shoutout to the open-source community for providing tools and libraries like Streamlit, OpenCV, TensorFlow, and many more. Our project wouldn't have been possible without the amazing work of these developers.
+
+- **[Prabin]** and **[Varsha]**: I want to express my gratitude to my friend [Km Varsha] for their exceptional collaboration on this project. Their dedication and hard work significantly contributed to the successful completion of this project.
+
+If you find this project useful or build upon it, please consider acknowledging this project in your work.
+
+
 
 
 
