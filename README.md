@@ -34,7 +34,8 @@ This project is aimed at recommending songs based on facial emotion detection. I
 
 ## Data Collection
 
-The dataset used in this project is stored in the `drive/MyDrive/project/data` directory. It contains images of faces with labeled emotions.
+The project uses the "Fer 2013" dataset, which contains facial expressions and emotions data. You can access the dataset from [Kaggle](https://www.kaggle.com/datasets/ashishpatel26/facial-expression-recognitionferchallenge).
+
 
 ## Data Preprocessing
 
