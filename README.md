@@ -29,6 +29,14 @@ You can try the application live at [https://song-recommendation-by-facial-emoti
 - **User Interaction:** Provides a user-friendly interface for uploading images for emotion analysis.
 - **Easy to Use:** Simple and intuitive design for a seamless user experience.
 
+## Dependencies
+
+* [![Python][python]][Python-url] : The primary programming language used for development.
+* [![OpenCV][opencv]][OpenCV-url] : Used for image processing and facial emotion detection.
+* [![TensorFlow][tensorflow]][TensorFlow-url] : Deep learning library for model inference.
+* [![Streamlit][Streamlit.io]][Streamlit-url] : A popular Python framework for creating web applications.
+
+
 
 ## Project Description
 
@@ -181,3 +189,15 @@ You can use this model for your song recommendation system based on facial emoti
   ```bash
   streamlit run app.py
   ```
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+[python]:https://img.shields.io/badge/Python-blue?logo=python&logoColor=yellow
+[Python-url]:https://www.python.org/
+[opencv]:https://img.shields.io/badge/OpenCV-CB4335?logo=opencv&logoColor=black
+[OpenCV-url]:https://opencv.org/
+[tensorflow]: https://img.shields.io/badge/TensorFlow-AED6F1?style=flat_square&logo=tensorflow&logoColor=black
+[TensorFlow-url]:https://www.tensorflow.org/
+[Streamlit.io]:https://img.shields.io/badge/Streamlit-DD0031?logo=streamlit&logoColor=black
+[Streamlit-url]:https://streamlit.io/
