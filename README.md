@@ -164,6 +164,6 @@ You can use this model for your song recommendation system based on facial emoti
   
 3. Run the Streamlit app using the following command:
 
-```bash
-streamlit run app.py
-```
+  ```bash
+  streamlit run app.py
+  ```
