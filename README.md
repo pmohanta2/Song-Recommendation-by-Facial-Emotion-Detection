@@ -150,6 +150,20 @@ history = model.fit(x_train,y_train,epochs=100,callbacks= [reduce_lr],validation
 
 You can use this model for your song recommendation system based on facial emotion detection. Pass an image containing a face, and the model will predict the emotion.
 
-```python
-# Example code for emotion detection
-# Load and preprocess the image, and then use the model to predict the emotion
+1. Clone the repository to your local machine.
+   
+   ```bash
+   git clone https://github.com/pmohanta2/Song-Recommendation-by-Facial-Emotion-Detection.git
+   cd Song-Recommendation-by-Facial-Emotion-Detection
+   ```
+2. Install the required Python packages listed in `requirements.txt`.
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+  
+3. Run the Streamlit app using the following command:
+
+```bash
+streamlit run app.py
+```
