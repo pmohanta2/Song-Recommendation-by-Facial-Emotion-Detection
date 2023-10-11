@@ -39,8 +39,45 @@ The project uses the "Fer 2013" dataset, which contains facial expressions and e
 
 ## Data Preprocessing
 
-- Data is loaded, resized, normalized, and label encoded.
-- The dataset is split into training and testing sets.
+- Data is loaded, resized.
+
+  ```bash
+  for dtype in os.listdir(folder):
+    path1 = os.path.join(folder,dtype)
+    for expression in os.listdir(path1):
+      path2 = os.path.join(path1,expression)
+      for x in os.listdir(path2):
+        imagepath = os.path.join(path2,x)
+        image = cv2.imread(imagepath,0)
+        image = image.reshape(48,48,1)
+  
+        dict['pixels'].append(image)
+        dict['labels'].append(expression)
+        dict['type'].append(dtype)
+  
+  df = pd.DataFrame(dict)
+  df.head()
+  ```
+
+- The dataset is label encoded and split into training, and testing sets.
+  ```bash
+  from sklearn.preprocessing import LabelEncoder
+  le=LabelEncoder()
+  
+  train_data['labels'] = le.fit_transform(train_data['labels'])
+  test_data['labels'] = le.transform(test_data['labels'])
+  ```
+  ```bash
+  x_train = train_data['pixels']
+  y_train = train_data['labels']
+  x_test = test_data['pixels']
+  y_test = test_data['labels']
+  ```
+- The dataset is normalized.
+  ```code
+  x_train = x_train/255.0
+  x_test = x_test/255.0
+  ```
 
 ## Model
 
