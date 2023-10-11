@@ -2,6 +2,8 @@
 
 **Table of Contents**
 - [Introduction](#introduction)
+- [Demo](#Demo)
+- [Features](#Features)
 - [Project Description](#project-description)
 - [Files in the Repository](#files-in-the-repository)
 - [Data Collection](#data-collection)
@@ -15,6 +17,18 @@
 ## Introduction
 
 This project is aimed at recommending songs based on facial emotion detection. It uses deep learning techniques to classify facial expressions into different emotions and recommends songs that match the detected emotion.
+
+## Demo
+
+You can try the application live at [https://song-recommendation-by-facial-emotion-detection-vp.streamlit.app/](https://song-recommendation-by-facial-emotion-detection-vp.streamlit.app/)
+
+## Features
+
+- **Emotion Detection:** Utilizes computer vision techniques to detect the user's facial emotions.
+- **Music Recommendation:** Suggests songs from a pre-defined playlist based on the detected emotion.
+- **User Interaction:** Provides a user-friendly interface for uploading images for emotion analysis.
+- **Easy to Use:** Simple and intuitive design for a seamless user experience.
+
 
 ## Project Description
 
