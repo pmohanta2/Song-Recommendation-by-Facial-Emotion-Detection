@@ -198,7 +198,7 @@ I would like to acknowledge and express my gratitude to the following individual
 
 - **Open Source Community**: A big shoutout to the open-source community for providing tools and libraries like Streamlit, OpenCV, TensorFlow, and many more. Our project wouldn't have been possible without the amazing work of these developers.
 
-- **[Prabin]** and **[Varsha]**: I want to express my gratitude to my friend [Km Varsha] for their exceptional collaboration on this project. Their dedication and hard work significantly contributed to the successful completion of this project.
+- **Prabin** and **Varsha**: I want to express my gratitude to my friend Km Varsha for their exceptional collaboration on this project. Their dedication and hard work significantly contributed to the successful completion of this project.
 
 If you find this project useful or build upon it, please consider acknowledging this project in your work.
 
