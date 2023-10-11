@@ -197,7 +197,7 @@ You can use this model for your song recommendation system based on facial emoti
 [Python-url]:https://www.python.org/
 [opencv]:https://img.shields.io/badge/OpenCV-DD0031?logo=opencv&logoColor=black
 [OpenCV-url]:https://opencv.org/
-[tensorflow]: https://img.shields.io/badge/TensorFlow-616A6B?style=flat_square&logo=tensorflow&logoColor=black
+[tensorflow]: https://img.shields.io/badge/TensorFlow-95A5A6?style=flat_square&logo=tensorflow&logoColor=black
 [TensorFlow-url]:https://www.tensorflow.org/
 [Streamlit.io]:https://img.shields.io/badge/Streamlit-green?logo=streamlit&logoColor=black
 [Streamlit-url]:https://streamlit.io/
