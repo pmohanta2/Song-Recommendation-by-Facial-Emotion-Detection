@@ -82,11 +82,69 @@ The project uses the "Fer 2013" dataset, which contains facial expressions and e
 ## Model
 
 The deep learning model is built using Keras. It consists of multiple convolutional and fully connected layers.
+```code
+model = Sequential()
+
+# Conv Block 1
+model.add(Conv2D(64, (3,3), padding='same', input_shape=(48,48,1)))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+# Conv Block 2
+model.add(Conv2D(128,(5,5), padding='same'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+# Conv Block 3
+model.add(Conv2D(512,(3,3), padding='same'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+# Conv Block 4
+model.add(Conv2D(512,(3,3), padding='same'))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(MaxPool2D(pool_size=(2,2)))
+model.add(Dropout(0.25))
+
+model.add(Flatten())
+
+# Fully connected Block 1
+model.add(Dense(256))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(Dropout(0.25))
+
+# Fully connected Block 2
+model.add(Dense(512))
+model.add(BatchNormalization())
+model.add(Activation('relu'))
+model.add(Dropout(0.25))
+
+model.add(Dense(7, activation='softmax'))
+
+model.compile(optimizer=Adam(lr=0.01), loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+model.summary()
+```
 
 ## Training
 
 - The model is trained for multiple epochs with learning rate reduction.
 - Training and validation results are monitored.
+
+
+```code
+reduce_lr = ReduceLROnPlateau(monitor='val_loss' , factor=0.1, patience=2, min_lr=0.00001,model='auto')
+```
+```code
+history = model.fit(x_train,y_train,epochs=100,callbacks= [reduce_lr],validation_data=(x_test,y_test))
+```
 
 ## Usage
 
