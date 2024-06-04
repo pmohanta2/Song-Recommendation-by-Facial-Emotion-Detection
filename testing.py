@@ -62,13 +62,20 @@ def main():
             # Live video feed
             run = st.checkbox('Run')
             FRAME_WINDOW = st.image([])
-            camera = cv2.VideoCapture(0)
             
+            # Initialize the camera
+            camera = cv2.VideoCapture(0)
+
             while run:
-                _, frame = camera.read()
+                # Capture frame-by-frame
+                ret, frame = camera.read()
+                if not ret:
+                    st.error("Failed to capture image")
+                    break
+                
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-                faces = haar_cascade.detectMultiScale(frame)
+                faces = haar_cascade.detectMultiScale(frame, scaleFactor=1.1, minNeighbors=5)
 
                 for (x, y, w, h) in faces:
                     cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
@@ -82,7 +89,6 @@ def main():
                     cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
                 
                 FRAME_WINDOW.image(frame)
-
             camera.release()
 
     elif choice == "About":
