@@ -66,7 +66,7 @@ def main():
             
             while run:
                 _, frame = camera.read()
-                # frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
                 faces = haar_cascade.detectMultiScale(frame)
 
