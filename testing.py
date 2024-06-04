@@ -5,7 +5,6 @@ import streamlit as st
 import cv2
 from tensorflow import keras
 import numpy as np
-import numpy
 
 def about():
     st.write("A user’s emotion or mood can be detected by his/her facial expressions. A lot of research is being conducted in the field of Computer Vision and Machine Learning (ML), where machines are trained to identify various human emotions or moods. Machine Learning provides various techniques through which human emotions can be detected.")
@@ -35,7 +34,7 @@ def main():
             # Image upload
             image_file = st.file_uploader("Upload image", type=['jpeg', 'png', 'jpg', 'webp'])
             if image_file is not None:
-                img = cv2.imdecode(np.fromstring(image_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
+                img = cv2.imdecode(np.frombuffer(image_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
                 st.image(img)
                 
                 if st.button("Process"):
@@ -48,7 +47,7 @@ def main():
                     else:
                         face = faces[0]
                         x, y, w, h = face
-                        frame = cv2.resize(img[y:y+h, x:x+w], (48,48), interpolation=cv2.INTER_AREA)
+                        frame = cv2.resize(img[y:y+h, x:x+w], (48, 48), interpolation=cv2.INTER_AREA)
                         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) / 255.0
                         gray = gray.reshape(1, 48, 48, 1)
 
@@ -62,34 +61,36 @@ def main():
             # Live video feed
             run = st.checkbox('Run')
             FRAME_WINDOW = st.image([])
-            
+
             # Initialize the camera
             camera = cv2.VideoCapture(0)
+            if not camera.isOpened():
+                st.error("Error: Could not open video device.")
+            else:
+                while run:
+                    ret, frame = camera.read()
+                    if not ret:
+                        st.error("Failed to capture image")
+                        break
+                    
+                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+                    faces = haar_cascade.detectMultiScale(frame, scaleFactor=1.1, minNeighbors=5)
 
-            while run:
-                # Capture frame-by-frame
-                ret, frame = camera.read()
-                if not ret:
-                    st.error("Failed to capture image")
-                    break
-                
-                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-                faces = haar_cascade.detectMultiScale(frame, scaleFactor=1.1, minNeighbors=5)
+                    for (x, y, w, h) in faces:
+                        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+                        face = frame[y:y+h, x:x+w]
+                        face = cv2.resize(face, (48, 48), interpolation=cv2.INTER_AREA)
+                        gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY) / 255.0
+                        gray = gray.reshape(1, 48, 48, 1)
 
-                for (x, y, w, h) in faces:
-                    cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                    face = frame[y:y+h, x:x+w]
-                    face = cv2.resize(face, (48,48), interpolation=cv2.INTER_AREA)
-                    gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY) / 255.0
-                    gray = gray.reshape(1, 48, 48, 1)
+                        predicts = model.predict(gray)[0]
+                        label = EMOTIONS[predicts.argmax()]
+                        cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+                    
+                    FRAME_WINDOW.image(frame)
 
-                    predicts = model.predict(gray)[0]
-                    label = EMOTIONS[predicts.argmax()]
-                    cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-                
-                FRAME_WINDOW.image(frame)
-            camera.release()
+                camera.release()
 
     elif choice == "About":
         about()
