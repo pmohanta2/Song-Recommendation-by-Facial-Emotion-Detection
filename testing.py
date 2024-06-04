@@ -35,7 +35,7 @@ def main():
             # Image upload
             image_file = st.file_uploader("Upload image", type=['jpeg', 'png', 'jpg', 'webp'])
             if image_file is not None:
-                img = cv2.imdecode(numpy.fromstring(image_file.read(), numpy.uint8), cv2.IMREAD_UNCHANGED)
+                img = cv2.imdecode(np.fromstring(image_file.read(), np.uint8), cv2.IMREAD_UNCHANGED)
                 st.image(img)
                 
                 if st.button("Process"):
