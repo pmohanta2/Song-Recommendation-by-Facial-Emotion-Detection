@@ -97,7 +97,10 @@ def main():
                 key="emotion-detection",
                 mode=WebRtcMode.SENDRECV,
                 video_processor_factory=lambda: EmotionDetectionProcessor(model, EMOTIONS),
-                async_processing=True
+                async_processing=True,
+                rtc_configuration={
+                    "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+                }
             )
 
     elif choice == "About":
