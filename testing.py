@@ -3,8 +3,10 @@
 
 import streamlit as st
 import cv2
-from tensorflow import keras
 import numpy as np
+from tensorflow import keras
+from streamlit_webrtc import webrtc_streamer, VideoTransformerBase, WebRtcMode
+import av
 
 def about():
     st.write("A user’s emotion or mood can be detected by his/her facial expressions. A lot of research is being conducted in the field of Computer Vision and Machine Learning (ML), where machines are trained to identify various human emotions or moods. Machine Learning provides various techniques through which human emotions can be detected.")
@@ -14,6 +16,29 @@ def about():
 def dev():
     st.write('### Km Varsha (dishanipandey311019@gmail.com)')
     st.write('### Prabin Kumar Mohanta (prabinkumarmohanta8@gmail.com)')
+
+class EmotionDetectionTransformer(VideoTransformerBase):
+    def __init__(self, model, emotions):
+        self.model = model
+        self.emotions = emotions
+        self.haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+    def transform(self, frame):
+        img = frame.to_ndarray(format="bgr24")
+
+        faces = self.haar_cascade.detectMultiScale(img, scaleFactor=1.1, minNeighbors=5)
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+            face = img[y:y+h, x:x+w]
+            face = cv2.resize(face, (48, 48), interpolation=cv2.INTER_AREA)
+            gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY) / 255.0
+            gray = gray.reshape(1, 48, 48, 1)
+
+            predicts = self.model.predict(gray)[0]
+            label = self.emotions[predicts.argmax()]
+            cv2.putText(img, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
+
+        return img
 
 def main():
     st.title("Recommend songs by detecting facial emotion")
@@ -58,39 +83,13 @@ def main():
                         recommend_music(label)
 
         elif mode == "Live Video":
-            # Live video feed
-            run = st.checkbox('Run')
-            FRAME_WINDOW = st.image([])
-
-            # Initialize the camera
-            camera = cv2.VideoCapture(0)
-            if not camera.isOpened():
-                st.error("Error: Could not open video device.")
-            else:
-                while run:
-                    ret, frame = camera.read()
-                    if not ret:
-                        st.error("Failed to capture image")
-                        break
-                    
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    haar_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-                    faces = haar_cascade.detectMultiScale(frame, scaleFactor=1.1, minNeighbors=5)
-
-                    for (x, y, w, h) in faces:
-                        cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                        face = frame[y:y+h, x:x+w]
-                        face = cv2.resize(face, (48, 48), interpolation=cv2.INTER_AREA)
-                        gray = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY) / 255.0
-                        gray = gray.reshape(1, 48, 48, 1)
-
-                        predicts = model.predict(gray)[0]
-                        label = EMOTIONS[predicts.argmax()]
-                        cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2, cv2.LINE_AA)
-                    
-                    FRAME_WINDOW.image(frame)
-
-                camera.release()
+            st.write("Starting live video...")
+            webrtc_ctx = webrtc_streamer(
+                key="emotion-detection",
+                mode=WebRtcMode.SENDRECV,
+                video_transformer_factory=lambda: EmotionDetectionTransformer(model, EMOTIONS),
+                async_processing=True
+            )
 
     elif choice == "About":
         about()
