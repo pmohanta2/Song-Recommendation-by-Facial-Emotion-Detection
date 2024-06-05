@@ -2,4 +2,3 @@ streamlit
 opencv-python-headless
 tensorflow
 streamlit-webrtc
-opencv_contrib_python
